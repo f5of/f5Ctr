@@ -1,0 +1,8 @@
+name: "f5of"
+displayName: "Endless interstellar"
+author: "developer(s): [white]ne[blue]kit[red]508 \nspriter(s): mak \nhost: enless"
+main: "endint.EndlessInterstellar"
+description: ""
+version: 1.0a
+minGameVersion: 136
+dependencies: []
