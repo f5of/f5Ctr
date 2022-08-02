@@ -1,8 +1,0 @@
-name: "f5of"
-displayName: "f5of"
-author: "developer(s): [white]ne[blue]kit[red]508 \nspriter(s): mak \nhost: enless"
-main: "core.Core"
-description: ""
-version: 1.0a
-minGameVersion: 136
-dependencies: []
