@@ -1,36 +1,21 @@
 package endint;
 
-import mindustry.ctype.*;
-import mma.*;
+import endint.content.*;
+import mindustry.mod.Mod;
 import mma.annotations.ModAnnotations.*;
-import static endint.EndlessInterstellarVars.*;
 
 @MainClass
-public class EndlessInterstellar extends MMAMod {
+public class EndlessInterstellar extends Mod {
+    public EndlessInterstellar(){
 
-    public EndlessInterstellar() {
-        super();
-        EndlessInterstellarVars.load();
     }
 
     @Override
-    protected void modContent(Content content) {
-        super.modContent(content);
-    }
-
-    public void init() {
-        if (!loaded)
-            return;
-        super.init();
-        if (neededInit)
-            listener.init();
-    }
-
-    /**
-     * All content types should be loaded into loadContent from {@link EndlessInterstellarVars}
-     * There is you can load extra things like ModMusic or ModSounds etc.
-     */
     public void loadContent() {
-        super.loadContent();
+        ModItems.load();
+        ModLiquids.load();
+        ModRecipes.load();
+        ModBlocks.load();
+        ModPlanets.load();
     }
 }

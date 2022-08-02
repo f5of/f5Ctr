@@ -173,7 +173,7 @@ task mjar(){
                 continue
             }
             if(directory.equals("classic")){
-                directory = "${arc.util.OS.getAppDataDirectoryString("Mindustry")}/mods/";
+                directory = "${System.getenv("AppData")+"\\\\"+"Mindustry"}/mods/";
             }
             move(directory);
         }

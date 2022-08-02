@@ -114,6 +114,7 @@ public class MultiConsumer extends Consume {
     public float efficiency(Building build) {
         tempRecipe = getAvailableRecipe(build);
         if(tempRecipe != null){
+            if(tempRecipe.energyIn == 0) return 1f;
             return getAvailablePower(build) < tempRecipe.energyIn / tempRecipe.craftTime ? 0f : 1f;
         }
         return 0f;

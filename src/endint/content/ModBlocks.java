@@ -18,7 +18,7 @@ import mindustry.world.Block;
 import static mindustry.type.ItemStack.with;
 
 public class ModBlocks {
-    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler;
+    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler, engine;
 
     public static void load(){
         monolith = new BuildCoreBlock("monolith"){{
@@ -155,6 +155,22 @@ public class ModBlocks {
             craftTime = 2f;
 
             consume(new MultiConsumer(ModRecipes.oilHeat, ModRecipes.fireCompoundHeat));
+
+            addTemperatureBar(this);
+        }};
+
+        engine = new SeptangoFactory("engine"){{
+            requirements(Category.crafting, ItemStack.with(Items.copper, 20, Items.titanium, 180,
+                    ModItems.crinite, 20));
+
+            size = 3;
+            health = 200;
+
+            craftTime = 600f;
+
+            liquidCapacity = 30f;
+
+            consume(new MultiConsumer(ModRecipes.energyEngine));
 
             addTemperatureBar(this);
         }};
