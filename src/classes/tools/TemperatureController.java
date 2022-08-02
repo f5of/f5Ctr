@@ -28,7 +28,6 @@ public class TemperatureController {
                 }
             }
             ((Temperaturec) building).addTemperature(core.Vars.temperatureRegressionPerSecond / -60f);
-            ((Temperaturec) building).addTemperature(((Temperaturec) building).getTemperatureProduction() / 60f);
         }
     }
 }

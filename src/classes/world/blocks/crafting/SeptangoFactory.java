@@ -7,7 +7,6 @@ import core.Vars;
 import mindustry.world.blocks.production.GenericCrafter;
 
 public class SeptangoFactory extends GenericCrafter {
-    public float temperaturePerSecond = 0.25f;
 
     public SeptangoFactory(String name) {
         super(name);
@@ -24,16 +23,6 @@ public class SeptangoFactory extends GenericCrafter {
         @Override
         public void addTemperature(float value) {
             temperature += value;
-        }
-
-        @Override
-        public float getTemperatureProduction() {
-            return warmup > 0 ? temperaturePerSecond : 0f;
-        }
-
-        @Override
-        public float getStatsTemperatureProduction() {
-            return temperaturePerSecond;
         }
 
         @Override

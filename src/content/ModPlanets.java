@@ -35,9 +35,12 @@ public class ModPlanets {
 
             orbitRadius = 240f;
             orbitSpacing = 60f;
+
+            accessible = true;
+            alwaysUnlocked = true;
         }};
 
-        modPlanet = new Planet("mod-planet", modSun, 1f, 3){{
+        modPlanet = new Planet("septango", modSun, 1f, 3){{
             generator = new SeptangoGenerator();
             meshLoader = () -> new HexMesh(this, 5);
             cloudMeshLoader = () -> new MultiMesh(

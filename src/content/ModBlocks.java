@@ -3,7 +3,6 @@ package content;
 import arc.util.Strings;
 import classes.world.blocks.BuildCoreBlock;
 import classes.world.blocks.crafting.SeptangoFactory;
-import classes.world.blocks.crafting.SeptangoHeater;
 import classes.world.type.MultiConsumer;
 import classes.world.type.Temperaturec;
 import mindustry.content.Items;
@@ -13,14 +12,14 @@ import mindustry.gen.Building;
 import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
-import mindustry.type.LiquidStack;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
+import mindustry.world.blocks.production.GenericCrafter;
 
 import static mindustry.type.ItemStack.with;
 
 public class ModBlocks {
-    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, oilBoiler, fireCompoundBoiler;
+    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler;
 
     public static void load(){
         monolith = new BuildCoreBlock("monolith"){{
@@ -46,7 +45,6 @@ public class ModBlocks {
         }};
 
         midas = new SeptangoFactory("midas"){{
-            temperaturePerSecond = 0.6f;
             requirements(Category.crafting, ItemStack.with(ModItems.crinite, 40, Items.copper, 100, Items.titanium, 50,
                     ModItems.goldPowder, 100));
 
@@ -58,8 +56,7 @@ public class ModBlocks {
             craftTime = 13 * 60;
 
             consumePower(200f/60f);
-            consumeItem(ModItems.goldPowder, 15);
-            outputItem = new ItemStack(Items.lead, 1);
+            consume(new MultiConsumer(ModRecipes.lead));
 
             addTemperatureBar(this);
         }};
@@ -91,9 +88,7 @@ public class ModBlocks {
             craftTime = 3 * 60;
 
             consumePower(200f/60f);
-            consumeLiquid(Liquids.oil, 30f/60f);
-            consumeItems(ItemStack.with(ModItems.dalcite, 10));
-            outputLiquids = LiquidStack.with(ModLiquids.fireCompound, 40f/60f);
+            consume(new MultiConsumer(ModRecipes.fireCompound));
 
             addTemperatureBar(this);
         }};
@@ -109,9 +104,7 @@ public class ModBlocks {
 
             craftTime = 5 * 60;
 
-            consumeLiquid(Liquids.oil, 10f/60f);
-            consumeItems(ItemStack.with(ModItems.salt, 5));
-            outputItems = ItemStack.with(ModItems.dalcite, 5);
+            consume(new MultiConsumer(ModRecipes.dalcite));
 
             addTemperatureBar(this);
         }};
@@ -128,14 +121,12 @@ public class ModBlocks {
             craftTime = 2 * 60;
 
             consumePower(200f/60f);
-            consumeItems(ItemStack.with(ModItems.ice, 1));
-            outputLiquids = LiquidStack.with(Liquids.water, 10f/60f);
+            consume(new MultiConsumer(ModRecipes.water));
 
             addTemperatureBar(this);
         }};
 
         crystallizer = new SeptangoFactory("crystallizer"){{
-            temperaturePerSecond = 0.4f;
             requirements(Category.crafting, ItemStack.with(ModItems.crinite, 50, ModItems.salt, 20,
                     ModItems.aluminium, 30, ModItems.carbon, 10, ModItems.goldPowder, 10));
 
@@ -148,37 +139,23 @@ public class ModBlocks {
             craftTime = 5 * 60;
 
             consumePower(20f/60f);
-            consumeItems(ItemStack.with(Items.titanium, 5));
-            consumeLiquid(Liquids.oil, 20f/60f);
-            outputItems = ItemStack.with(ModItems.carbon, 2);
+            consume(new MultiConsumer(ModRecipes.carbon));
 
             addTemperatureBar(this);
         }};
 
-        heater = new SeptangoHeater("heater"){{
-            temperaturePerSecond = 5f;
-            temperatureRange = 10f;
-            requirements(Category.crafting, ItemStack.with(ModItems.aluminium, 30, Items.titanium, 50));
-
-            size = 2;
-            health = 50;
-
-            consumePower(400f/60f);
-
-            addTemperatureBar(this);
-        }};
-
-        oilBoiler = new SeptangoHeater("oil-boiler"){{
-            temperaturePerSecond = 20f;
-            temperatureRange = 10f;
+        boiler = new SeptangoFactory("boiler"){{
             requirements(Category.crafting, ItemStack.with(ModItems.aluminium, 20, Items.titanium, 30,
                     ModItems.crinite, 40));
 
             size = 3;
             health = 100;
 
-            consumeLiquid(Liquids.oil, 20f / 60f);
-            consumePower(2f / 60f);
+            liquidCapacity = 60;
+
+            craftTime = 2f;
+
+            consume(new MultiConsumer(ModRecipes.oilHeat, ModRecipes.fireCompoundHeat));
 
             addTemperatureBar(this);
         }};
@@ -201,6 +178,5 @@ public class ModBlocks {
                     return 1;
                 })
         );
-        build.stats.add(ModStats.tempProduct, ((Temperaturec) build.newBuilding()).getStatsTemperatureProduction(), ModStats.temperatureUnit);
     }
 }
