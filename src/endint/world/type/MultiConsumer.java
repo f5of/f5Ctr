@@ -1,10 +1,11 @@
-package classes.world.type;
+package endint.world.type;
 
 import arc.Core;
 import arc.scene.ui.Image;
 import arc.scene.ui.layout.Table;
 import arc.util.Strings;
-import content.ModStats;
+import endint.world.type.Recipe;
+import endint.world.type.Temperaturec;
 import mindustry.gen.Building;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;

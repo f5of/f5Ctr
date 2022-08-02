@@ -1,5 +1,6 @@
 package endint.tools;
 
+import endint.EndlessInterstellarVars;
 import endint.world.type.*;
 import mindustry.*;
 import mindustry.gen.*;
@@ -27,7 +28,7 @@ public class TemperatureController {
                     }
                 }
             }
-            ((Temperaturec) building).addTemperature(core.Vars.temperatureRegressionPerSecond / -60f);
+            ((Temperaturec) building).addTemperature(EndlessInterstellarVars.temperatureRegressionPerSecond / -60f);
         }
     }
 }

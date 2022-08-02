@@ -1,6 +1,6 @@
-package content;
+package endint.content;
 
-import classes.world.type.Recipe;
+import endint.world.type.Recipe;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.type.ItemStack;

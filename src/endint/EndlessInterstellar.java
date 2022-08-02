@@ -1,10 +1,6 @@
 package endint;
 
-import arc.*;
-import arc.util.*;
 import mindustry.ctype.*;
-import mindustry.game.EventType.*;
-import mindustry.ui.dialogs.*;
 import mma.*;
 import mma.annotations.ModAnnotations.*;
 import static endint.EndlessInterstellarVars.*;
@@ -15,39 +11,17 @@ public class EndlessInterstellar extends MMAMod {
     public EndlessInterstellar() {
         super();
         EndlessInterstellarVars.load();
-        Log.info("Loaded EndlessInterstellar constructor.");
-        // listen for game load event
-        Events.on(ClientLoadEvent.class, e -> {
-            // show dialog upon startup
-            Time.runTask(10f, () -> {
-                BaseDialog dialog = new BaseDialog("frog");
-                dialog.cont.add("behold").row();
-                // mod sprites are prefixed with the mod name (you can use ModVars.fullName(NAME) for get name with mod prefix)
-                dialog.cont.image(Core.atlas.find(fullName("frog"))).pad(20f).row();
-                dialog.cont.button("I see", dialog::hide).size(100f, 50f);
-                dialog.show();
-            });
-        });
     }
 
     @Override
     protected void modContent(Content content) {
         super.modContent(content);
-        /*
-        * if you use Load annotation in any class that extends MappableContent,
-        * ZelauxModCore will generate YOUR_PREFIXContentRegions class and here you can apply that on instances of those classes
-        *
-        if(content instanceof MappableContent){
-            YOUR_PREFIXContentRegions.loadRegions((MappableContent)content);
-        }
-        */
     }
 
     public void init() {
         if (!loaded)
             return;
         super.init();
-        // if you do not need ModListener just remove line after this comment
         if (neededInit)
             listener.init();
     }

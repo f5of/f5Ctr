@@ -121,7 +121,7 @@ jar{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
     }
 
-    from(rootDir){
+    from(new File(rootDir,"resources")){
         include "mod.hjson"
         include "mod.json"
         include "icon.png"

@@ -1,10 +1,10 @@
-package content;
+package endint.content;
 
 import arc.util.Strings;
-import classes.world.blocks.BuildCoreBlock;
-import classes.world.blocks.crafting.SeptangoFactory;
-import classes.world.type.MultiConsumer;
-import classes.world.type.Temperaturec;
+import endint.world.blocks.BuildCoreBlock;
+import endint.world.blocks.crafting.SeptangoFactory;
+import endint.world.type.MultiConsumer;
+import endint.world.type.Temperaturec;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.UnitTypes;
@@ -14,7 +14,6 @@ import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
-import mindustry.world.blocks.production.GenericCrafter;
 
 import static mindustry.type.ItemStack.with;
 

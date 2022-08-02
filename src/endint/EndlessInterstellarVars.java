@@ -9,6 +9,8 @@ import mindustry.game.*;
 import mma.*;
 
 public class EndlessInterstellarVars extends ModVars{
+    public static float temperatureRegressionPerSecond = 0.5f;
+
     private final static Seq<Runnable> onLoad = new Seq<>();
 //    public static ModSettings settings;
 //    public static ModNetClient netClient;
