@@ -1,8 +1,6 @@
 package core;
 
-import content.ModBlocks;
-import content.ModItems;
-import content.ModPlanets;
+import content.*;
 import mindustry.mod.Mod;
 
 public class Core extends Mod {
@@ -13,6 +11,8 @@ public class Core extends Mod {
     @Override
     public void loadContent() {
         ModItems.load();
+        ModLiquids.load();
+        ModRecipes.load();
         ModBlocks.load();
         ModPlanets.load();
     }

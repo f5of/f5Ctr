@@ -1,6 +1,7 @@
 package content;
 
 import arc.graphics.Color;
+import classes.world.planets.SeptangoGenerator;
 import mindustry.content.Items;
 import mindustry.content.Planets;
 import mindustry.game.Team;
@@ -37,11 +38,11 @@ public class ModPlanets {
         }};
 
         modPlanet = new Planet("mod-planet", modSun, 1f, 3){{
-            generator = new SerpuloPlanetGenerator();
+            generator = new SeptangoGenerator();
             meshLoader = () -> new HexMesh(this, 5);
             cloudMeshLoader = () -> new MultiMesh(
-                    new HexSkyMesh(this, 11, 0.15f, 0.13f, 5, new Color().set(Pal.spore).mul(0.9f).a(0.75f), 2, 0.45f, 0.9f, 0.38f),
-                    new HexSkyMesh(this, 1, 0.6f, 0.16f, 5, Color.white.cpy().lerp(Pal.spore, 0.55f).a(0.75f), 2, 0.45f, 1f, 0.41f)
+                    new HexSkyMesh(this, 11, 0.15f, 0.13f, 5, Color.blue.a(0.75f), 2, 0.45f, 0.9f, 0.38f),
+                    new HexSkyMesh(this, 1, 0.6f, 0.16f, 5, Color.white.a(0.75f), 2, 0.45f, 1f, 0.41f)
             );
 
             launchCapacityMultiplier = 0.5f;
@@ -58,12 +59,12 @@ public class ModPlanets {
                 r.attributes.clear();
                 r.showSpawns = false;
             };
-            atmosphereColor = Color.valueOf("3c1b8f");
+            atmosphereColor = Color.valueOf("eeeeee");
             atmosphereRadIn = 0.02f;
             atmosphereRadOut = 0.3f;
             startSector = 15;
             alwaysUnlocked = true;
-            landCloudColor = Pal.spore.cpy().a(0.5f);
+            landCloudColor = Color.blue.cpy().a(0.5f);
             hiddenItems.addAll(Items.erekirItems).removeAll(Items.serpuloItems);
         }};
     }
