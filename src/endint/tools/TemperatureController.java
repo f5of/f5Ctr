@@ -7,11 +7,11 @@ import mindustry.gen.*;
 
 public class TemperatureController{
     public static float temperatureRegressionPerTic = 0.5f / Time.toSeconds;
-    private static Building owner;
 
     public static <T extends Building&Temperaturec> void updateBuilding(T building){
         int range = building.temperatureRange();
         float delta;
+        Building owner;
         for(int x = -range + 1; x < range; x++){
             for(int y = -range + 1; y < range; y++){
                 if(x * x + y * y <= range * range){
