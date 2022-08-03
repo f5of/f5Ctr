@@ -7,7 +7,7 @@ import mindustry.gen.*;
 
 public class TemperatureController{
     public static <T extends Building&Temperaturec> void updateBuilding(T building){
-        int range = building.temperatureRange() == -1 ? building.block().size * 3 : (int)(building).temperatureRange();
+        int range = building.temperatureRange();
         Building owner;
         float delta;
         for(int x = -range + 1; x < range; x++){

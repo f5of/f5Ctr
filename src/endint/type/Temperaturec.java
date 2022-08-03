@@ -1,9 +1,11 @@
 package endint.type;
 
-public interface Temperaturec {
+import mindustry.gen.*;
+
+public interface Temperaturec extends Buildingc{
     float temperature();
     void addTemperature(float value);
-    default float temperatureRange() {return -1;}
+    default int temperatureRange() {return block().size * 3;}
     default float maxWorkableTemperature(){return 1000f;}
     default float minWorkableTemperature(){return -200f;}
     default boolean canWork(){
