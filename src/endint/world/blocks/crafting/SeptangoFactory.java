@@ -26,7 +26,7 @@ public class SeptangoFactory extends GenericCrafter {
         @Override
         public void updateTile() {
             super.updateTile();
-            TemperatureController.handleBuilding(this);
+            TemperatureController.updateBuilding(this);
         }
 
         @Override

@@ -245,7 +245,7 @@ public class BuildCoreBlock extends CoreBlock {
 
             blockUnit.updateBuildLogic();
 
-            TemperatureController.handleBuilding(this);
+            TemperatureController.updateBuilding(this);
         }
 
         @Override
