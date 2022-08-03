@@ -1,23 +1,20 @@
 package endint.content;
 
-import arc.util.Strings;
-import endint.world.blocks.BuildCoreBlock;
-import endint.world.blocks.crafting.SeptangoFactory;
-import endint.type.MultiConsumer;
-import endint.type.Temperaturec;
-import mindustry.content.Items;
-import mindustry.content.Liquids;
-import mindustry.content.UnitTypes;
-import mindustry.gen.Building;
-import mindustry.graphics.Pal;
-import mindustry.type.Category;
-import mindustry.type.ItemStack;
-import mindustry.ui.Bar;
-import mindustry.world.Block;
+import arc.math.*;
+import arc.util.*;
+import endint.type.*;
+import endint.world.blocks.*;
+import endint.world.blocks.crafting.*;
+import mindustry.content.*;
+import mindustry.gen.*;
+import mindustry.graphics.*;
+import mindustry.type.*;
+import mindustry.ui.*;
+import mindustry.world.*;
 
 import static mindustry.type.ItemStack.with;
 
-public class ModBlocks {
+public class ModBlocks{
     public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler, engine;
 
     public static void load(){
@@ -38,14 +35,14 @@ public class ModBlocks {
 
             unitCapModifier = 16;
 
-            powerOut = 200f/60f;
+            powerOut = 200f / 60f;
 
             addTemperatureBar(this);
         }};
 
         midas = new SeptangoFactory("midas"){{
             requirements(Category.crafting, ItemStack.with(ModItems.crinite, 40, Items.copper, 100, Items.titanium, 50,
-                    ModItems.goldPowder, 100));
+            ModItems.goldPowder, 100));
 
             health = 300;
             itemCapacity = 30;
@@ -54,7 +51,7 @@ public class ModBlocks {
 
             craftTime = 13 * 60;
 
-            consumePower(200f/60f);
+            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.lead));
 
             addTemperatureBar(this);
@@ -86,7 +83,7 @@ public class ModBlocks {
 
             craftTime = 3 * 60;
 
-            consumePower(200f/60f);
+            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.fireCompound));
 
             addTemperatureBar(this);
@@ -119,7 +116,7 @@ public class ModBlocks {
 
             craftTime = 2 * 60;
 
-            consumePower(200f/60f);
+            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.water));
 
             addTemperatureBar(this);
@@ -127,7 +124,7 @@ public class ModBlocks {
 
         crystallizer = new SeptangoFactory("crystallizer"){{
             requirements(Category.crafting, ItemStack.with(ModItems.crinite, 50, ModItems.salt, 20,
-                    ModItems.aluminium, 30, ModItems.carbon, 10, ModItems.goldPowder, 10));
+            ModItems.aluminium, 30, ModItems.carbon, 10, ModItems.goldPowder, 10));
 
             health = 500;
             itemCapacity = 15;
@@ -137,7 +134,7 @@ public class ModBlocks {
 
             craftTime = 5 * 60;
 
-            consumePower(20f/60f);
+            consumePower(20f / 60f);
             consume(new MultiConsumer(ModRecipes.carbon));
 
             addTemperatureBar(this);
@@ -145,7 +142,7 @@ public class ModBlocks {
 
         boiler = new SeptangoFactory("boiler"){{
             requirements(Category.crafting, ItemStack.with(ModItems.aluminium, 20, Items.titanium, 30,
-                    ModItems.crinite, 40));
+            ModItems.crinite, 40));
 
             size = 3;
             health = 100;
@@ -161,7 +158,7 @@ public class ModBlocks {
 
         engine = new SeptangoFactory("engine"){{
             requirements(Category.crafting, ItemStack.with(Items.copper, 20, Items.titanium, 180,
-                    ModItems.crinite, 20));
+            ModItems.crinite, 20));
 
             size = 3;
             health = 200;
@@ -176,22 +173,16 @@ public class ModBlocks {
         }};
     }
 
-    static void addTemperatureBar(Block build){
-        build.addBar("temperature", (Building entity) -> new Bar(
-                () -> {
-                    if(entity instanceof Temperaturec) {
-                        return Strings.fixed(((Temperaturec) entity).temperature(), 1);
-                    }
-                    return "F";
-                },
-                () -> Liquids.cryofluid.barColor(),
-                () -> {
-                    if(entity instanceof Temperaturec) {
-                        return Math.min(Math.max((((Temperaturec) entity).temperature() - ((Temperaturec) entity).minWorkableTemperature()) /
-                                (((Temperaturec) entity).maxWorkableTemperature() - ((Temperaturec) entity).minWorkableTemperature()), 0f), 1f);
-                    }
-                    return 1;
-                })
+    static void addTemperatureBar(Block block){
+        Building building = block.buildType.get();
+        if(!(building instanceof Temperaturec)) throw new IllegalArgumentException("Building of \"" + block.name + "\" should be instanceof Temperaturec");
+        block.addBar("temperature", (Building e) -> {
+            Temperaturec entity = e.as();
+            return new Bar(
+            () -> Strings.fixed(entity.temperature(), 1),
+            () -> Liquids.cryofluid.barColor(),
+            () -> Mathf.clamp(Mathf.map(entity.temperature(), entity.minWorkableTemperature(), entity.maxWorkableTemperature(), 0, 1f)));
+        }
         );
     }
 }
