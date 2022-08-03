@@ -1,11 +1,9 @@
-package endint.world.type;
+package endint.type;
 
 import arc.Core;
 import arc.scene.ui.Image;
 import arc.scene.ui.layout.Table;
 import arc.util.Strings;
-import endint.world.type.Recipe;
-import endint.world.type.Temperaturec;
 import mindustry.gen.Building;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
@@ -16,7 +14,6 @@ import mindustry.ui.ReqImage;
 import mindustry.world.Block;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.consumers.Consume;
-import mindustry.world.consumers.ConsumePower;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatCat;
 import mindustry.world.meta.Stats;

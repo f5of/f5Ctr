@@ -1,7 +1,7 @@
 package endint.world.blocks.crafting;
 
 import endint.tools.*;
-import endint.world.type.*;
+import endint.type.*;
 import mindustry.world.blocks.production.*;
 
 public class SeptangoFactory extends GenericCrafter {
@@ -14,7 +14,7 @@ public class SeptangoFactory extends GenericCrafter {
         public float temperature = 0f;
 
         @Override
-        public float getTemperature() {
+        public float temperature() {
             return temperature;
         }
 

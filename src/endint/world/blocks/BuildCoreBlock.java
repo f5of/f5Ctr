@@ -7,7 +7,7 @@ import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
 import endint.tools.*;
-import endint.world.type.*;
+import endint.type.*;
 import mindustry.entities.*;
 import mindustry.entities.units.*;
 import mindustry.game.*;
@@ -297,7 +297,7 @@ public class BuildCoreBlock extends CoreBlock {
         }
 
         @Override
-        public float getTemperature() {
+        public float temperature() {
             return temperature;
         }
 

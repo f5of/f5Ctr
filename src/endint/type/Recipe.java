@@ -1,4 +1,4 @@
-package endint.world.type;
+package endint.type;
 
 import mindustry.type.*;
 

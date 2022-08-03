@@ -3,8 +3,8 @@ package endint.content;
 import arc.util.Strings;
 import endint.world.blocks.BuildCoreBlock;
 import endint.world.blocks.crafting.SeptangoFactory;
-import endint.world.type.MultiConsumer;
-import endint.world.type.Temperaturec;
+import endint.type.MultiConsumer;
+import endint.type.Temperaturec;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.UnitTypes;
@@ -180,14 +180,14 @@ public class ModBlocks {
         build.addBar("temperature", (Building entity) -> new Bar(
                 () -> {
                     if(entity instanceof Temperaturec) {
-                        return Strings.fixed(((Temperaturec) entity).getTemperature(), 1);
+                        return Strings.fixed(((Temperaturec) entity).temperature(), 1);
                     }
                     return "F";
                 },
                 () -> Liquids.cryofluid.barColor(),
                 () -> {
                     if(entity instanceof Temperaturec) {
-                        return Math.min(Math.max((((Temperaturec) entity).getTemperature() - ((Temperaturec) entity).minWorkableTemperature()) /
+                        return Math.min(Math.max((((Temperaturec) entity).temperature() - ((Temperaturec) entity).minWorkableTemperature()) /
                                 (((Temperaturec) entity).maxWorkableTemperature() - ((Temperaturec) entity).minWorkableTemperature()), 0f), 1f);
                     }
                     return 1;
