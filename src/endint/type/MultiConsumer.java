@@ -28,7 +28,7 @@ public class MultiConsumer extends Consume {
     public Recipe[] recipes;
 
     protected Recipe tempRecipe;
-    protected boolean ok;
+    protected boolean validConsume;
 
     public MultiConsumer(Recipe... recipes){
         this.recipes = recipes;
@@ -92,14 +92,14 @@ public class MultiConsumer extends Consume {
 
     Recipe getAvailableRecipe(Building build){
         for (Recipe recipe : recipes) {
-            ok = true;
+            validConsume = true;
             for (LiquidStack liquidStack : recipe.liquidsIn) {
-                if(build.liquids.get(liquidStack.liquid) < liquidStack.amount) ok = false;
+                if(build.liquids.get(liquidStack.liquid) < liquidStack.amount) validConsume = false;
             }
             for (ItemStack itemStack : recipe.itemsIn) {
-                if(!build.items.has(itemStack.item, itemStack.amount)) ok = false;
+                if(!build.items.has(itemStack.item, itemStack.amount)) validConsume = false;
             }
-            if (ok) {
+            if (validConsume) {
                 if(build.block instanceof GenericCrafter) ((GenericCrafter) build.block).craftTime = recipe.craftTime;
                 return recipe;
             }
