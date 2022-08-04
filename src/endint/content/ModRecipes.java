@@ -7,7 +7,8 @@ import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 
 public class ModRecipes {
-    public static Recipe lead, crinite, fireCompound, dalcite, water, carbon, oilHeat, fireCompoundHeat, energyEngine;
+    public static Recipe lead, crinite, fireCompound, dalcite, water, carbon, oilHeat, fireCompoundHeat, energyEngine,
+            energyForcedEngineOil, energyForcedEngineFireCompound;
 
     public static void load(){
         lead = new Recipe(){{
@@ -71,6 +72,20 @@ public class ModRecipes {
             liquidsIn = LiquidStack.with(Liquids.oil, 10);
             energyOut = 100;
             temperatureProd = 1f;
+            craftTime = 60f;
+        }};
+
+        energyForcedEngineOil = new Recipe(){{
+            liquidsIn = LiquidStack.with(Liquids.oil, 20);
+            energyOut = 240;
+            temperatureProd = 2f;
+            craftTime = 60f;
+        }};
+
+        energyForcedEngineFireCompound = new Recipe(){{
+            liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20);
+            energyOut = 480;
+            temperatureProd = 3f;
             craftTime = 60f;
         }};
     }

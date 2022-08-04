@@ -15,7 +15,8 @@ import mindustry.world.*;
 import static mindustry.type.ItemStack.with;
 
 public class ModBlocks{
-    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler, engine;
+    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler, engine,
+            forcedEngine;
 
     public static void load(){
         monolith = new BuildCoreBlock("monolith"){{
@@ -51,7 +52,6 @@ public class ModBlocks{
 
             craftTime = 13 * 60;
 
-            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.lead));
 
             addTemperatureBar(this);
@@ -83,7 +83,6 @@ public class ModBlocks{
 
             craftTime = 3 * 60;
 
-            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.fireCompound));
 
             addTemperatureBar(this);
@@ -116,7 +115,6 @@ public class ModBlocks{
 
             craftTime = 2 * 60;
 
-            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.water));
 
             addTemperatureBar(this);
@@ -134,7 +132,6 @@ public class ModBlocks{
 
             craftTime = 5 * 60;
 
-            consumePower(20f / 60f);
             consume(new MultiConsumer(ModRecipes.carbon));
 
             addTemperatureBar(this);
@@ -168,6 +165,22 @@ public class ModBlocks{
             liquidCapacity = 30f;
 
             consume(new MultiConsumer(ModRecipes.energyEngine));
+
+            addTemperatureBar(this);
+        }};
+
+        forcedEngine = new SeptangoFactory("forced-engine"){{
+            requirements(Category.crafting, ItemStack.with(ModItems.carbon, 10, ModItems.salt, 30,
+                    ModItems.crinite, 30, Items.titanium, 200));
+
+            size = 3;
+            health = 200;
+
+            craftTime = 600f;
+
+            liquidCapacity = 60f;
+
+            consume(new MultiConsumer(ModRecipes.energyForcedEngineOil, ModRecipes.energyForcedEngineFireCompound));
 
             addTemperatureBar(this);
         }};

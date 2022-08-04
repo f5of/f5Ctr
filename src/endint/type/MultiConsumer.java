@@ -49,11 +49,13 @@ public class MultiConsumer extends Consume {
                 block.liquidFilter[liquidStack.liquid.id] = true;
                 l = true;
             }
+            if(recipe.itemsOut.length != 0) i = true;
+            if(recipe.liquidsOut.length != 0) i = true;
             if(recipe.energyIn > 0 || recipe.energyOut > 0) p = true;
         }
         block.hasItems = i;
         block.hasLiquids = l;
-        block.acceptsItems = true;
+        block.acceptsItems = i;
         block.hasPower = p;
     }
 
