@@ -1,8 +1,13 @@
 package endint;
 
+import endint.tools.Reflections;
 import mindustry.ctype.*;
+import mindustry.world.blocks.power.PowerGraph;
 import mma.*;
 import mma.annotations.ModAnnotations.*;
+
+import java.lang.reflect.Field;
+
 import static endint.EndlessInterstellarVars.*;
 
 @MainClass
@@ -24,6 +29,7 @@ public class EndlessInterstellar extends MMAMod {
         super.init();
         if (neededInit)
             listener.init();
+        Reflections.dePrivate(PowerGraph.class, "all");
     }
 
     /**

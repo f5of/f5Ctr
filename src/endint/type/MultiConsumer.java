@@ -3,7 +3,11 @@ package endint.type;
 import arc.Core;
 import arc.scene.ui.Image;
 import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
+import arc.util.Log;
 import arc.util.Strings;
+import endint.tools.Reflections;
+import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Tex;
 import mindustry.graphics.Pal;
@@ -14,11 +18,12 @@ import mindustry.ui.ReqImage;
 import mindustry.world.Block;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.consumers.Consume;
+import mindustry.world.consumers.ConsumePower;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatCat;
 import mindustry.world.meta.Stats;
 
-public class MultiConsumer extends Consume {
+public class MultiConsumer extends ConsumePower {
     public static final StatCat
             recipesStat = new StatCat("recipes");
 
@@ -29,9 +34,11 @@ public class MultiConsumer extends Consume {
 
     protected Recipe tempRecipe;
     protected boolean validConsume;
+    protected float efficiency;
 
     public MultiConsumer(Recipe... recipes){
         this.recipes = recipes;
+        buffered = false;
     }
 
     @Override
@@ -39,7 +46,7 @@ public class MultiConsumer extends Consume {
 
     @Override
     public void apply(Block block) {
-        boolean i = false, l = false, p = false;
+        boolean i = false, l = false, p = false, cp = false, op = false;
         for (Recipe recipe : recipes) {
             for (ItemStack ItemStack : recipe.itemsIn) {
                 block.itemFilter[ItemStack.item.id] = true;
@@ -52,11 +59,15 @@ public class MultiConsumer extends Consume {
             if(recipe.itemsOut.length != 0) i = true;
             if(recipe.liquidsOut.length != 0) i = true;
             if(recipe.energyIn > 0 || recipe.energyOut > 0) p = true;
+            if(recipe.energyIn > 0) cp = true;
+            if(recipe.energyOut > 0) op = true;
         }
         block.hasItems = i;
         block.hasLiquids = l;
         block.acceptsItems = i;
         block.hasPower = p;
+        block.consumesPower = cp;
+        block.outputsPower = op;
     }
 
     @Override
@@ -114,7 +125,7 @@ public class MultiConsumer extends Consume {
         tempRecipe = getAvailableRecipe(build);
         if(tempRecipe != null){
             if(tempRecipe.energyIn == 0) return 1f;
-            return getAvailablePower(build) < tempRecipe.energyIn / tempRecipe.craftTime ? 0f : 1f;
+            return build.power.status;
         }
         return 0f;
     }
@@ -137,9 +148,6 @@ public class MultiConsumer extends Consume {
         for (LiquidStack liquidStack : tempRecipe.liquidsOut) {
             build.liquids.add(liquidStack.liquid, liquidStack.amount);
         }
-
-        if(hasPower(build))
-        build.power.graph.transferPower(tempRecipe.energyOut);
 
         if(build instanceof Temperaturec) ((Temperaturec) build).addTemperature(tempRecipe.temperatureProd);
     }
@@ -194,11 +202,14 @@ public class MultiConsumer extends Consume {
         for (LiquidStack liquidStack : tempRecipe.liquidsOut) {
             build.dumpLiquid(liquidStack.liquid);
         }
+        if(hasPower(build)) build.power.graph.transferPower(tempRecipe.energyOut / tempRecipe.craftTime * efficiency(build));
     }
 
-    public float getAvailablePower(Building build){
-        if(!hasPower(build)) return 0;
-        return build.power.graph.getPowerProduced() - build.power.graph.getPowerNeeded() + build.power.graph.getBatteryStored();
+    @Override
+    public float requestedPower(Building build) {
+        tempRecipe = getAvailableRecipe(build);
+        if(tempRecipe == null) return 0;
+        return tempRecipe.energyIn / tempRecipe.craftTime;
     }
 
     public boolean hasPower(Building build){

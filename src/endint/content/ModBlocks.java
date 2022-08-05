@@ -16,9 +16,34 @@ import static mindustry.type.ItemStack.with;
 
 public class ModBlocks{
     public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler, engine,
-            forcedEngine;
+            forcedEngine, block;
 
     public static void load(){
+        block = new MultiCrafter("block"){{
+            requirements(Category.crafting, ItemStack.with(ModItems.crinite, 40, Items.copper, 100, Items.titanium, 50,
+                    ModItems.goldPowder, 100));
+
+            health = 300;
+            itemCapacity = 30;
+
+            size = 4;
+
+            consume = new ConsumeAll(new ConsumeAll.Recipe(){{
+                liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20, Liquids.oil, 50);
+                itemsIn = ItemStack.with(Items.titanium, 20, Items.graphite, 10, Items.lead, 5);
+                itemsOut = ItemStack.with(ModItems.goldPowder, 10, ModItems.salt, 20);
+                liquidsOut = LiquidStack.with(Liquids.water, 10, Liquids.slag, 10);
+                craftTime = 600;
+            }},
+                    new ConsumeAll.Recipe(){{
+                        liquidsIn = LiquidStack.with(Liquids.water, 30, Liquids.oil, 1);
+                        itemsIn = ItemStack.with(Items.copper, 10, Items.graphite, 10, Items.lead, 20);
+                        itemsOut = ItemStack.with(Items.surgeAlloy, 8, ModItems.salt, 20);
+                        liquidsOut = LiquidStack.with(Liquids.water, 1, Liquids.slag, 80);
+                        craftTime = 600;
+                    }});
+        }};
+
         monolith = new BuildCoreBlock("monolith"){{
             requirements(Category.effect, with(Items.silicon, 150, Items.thorium, 60));
             outlineColor = Pal.darkOutline;
