@@ -38,6 +38,11 @@ public class EndlessInterstellarVars extends ModVars{
     public static void load(){
         onLoad.each(Runnable::run);
         onLoad.clear();
+        //settings = new ModSettings();
+        //if (!headless) listener.add(modUI = new ModUI());
+        //listener.add(netClient = new ModNetClient());
+        //listener.add(netServer = new ModNetServer());
+        //listener.add(logic = new ModLogic());
     }
 
 
@@ -53,7 +58,7 @@ public class EndlessInterstellarVars extends ModVars{
     @Override
     /**This is where you initialize your content lists. But do not forget about correct order.
      * @note correct order:
-     *  ModItems.load()
+     *  EIItems.load()
      *  ModStatusEffects.load()
      *  ModLiquids.load()
      *  ModBullets.load()
@@ -64,7 +69,7 @@ public class EndlessInterstellarVars extends ModVars{
      *  ModTechTree.load()
      * */
     public void loadContent(){
-        ModItems.load();
+        EIItems.load();
         ModLiquids.load();
         ModRecipes.load();
         ModBlocks.load();

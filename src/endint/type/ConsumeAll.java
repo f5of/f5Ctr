@@ -26,12 +26,9 @@ import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatCat;
 import mindustry.world.meta.Stats;
 
-public class ConsumeAll {
-    public static final StatCat
-            recipesStat = new StatCat("recipes");
+import static endint.content.ModStats.recipeStat;
 
-    public static final Stat
-            recipeStat = new Stat("recipe", recipesStat);
+public class ConsumeAll {
 
     public Recipe[] recipes;
     public Prov<ConsumePower> power;
