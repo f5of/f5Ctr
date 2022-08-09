@@ -78,14 +78,14 @@ public class ModRecipes {
         energyForcedEngineOil = new Recipe(){{
             liquidsIn = LiquidStack.with(Liquids.oil, 20);
             energyOut = 240;
-            temperatureProd = 2f;
+            temperatureOut = 2f;
             craftTime = 60f;
         }};
 
         energyForcedEngineFireCompound = new Recipe(){{
             liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20);
             energyOut = 480;
-            temperatureProd = 3f;
+            temperatureOut = 3f;
             craftTime = 60f;
         }};
     }

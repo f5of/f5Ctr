@@ -13,4 +13,9 @@ public class ModStats{
 
     public static final Stat
             tempProduct = new Stat("tempProduct", temperature);
+    public static final StatCat
+    recipesStat = new StatCat("recipes");
+
+    public static final Stat
+    recipeStat = new Stat("recipe", recipesStat);
 }

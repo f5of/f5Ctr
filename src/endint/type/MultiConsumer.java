@@ -6,7 +6,6 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Log;
 import arc.util.Strings;
-import endint.tools.Reflections;
 import mindustry.game.Team;
 import mindustry.gen.Building;
 import mindustry.gen.Tex;
@@ -23,12 +22,9 @@ import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatCat;
 import mindustry.world.meta.Stats;
 
-public class MultiConsumer extends ConsumePower {
-    public static final StatCat
-    recipesStat = new StatCat("recipes");
+import static endint.content.ModStats.recipeStat;
 
-    public static final Stat
-    recipeStat = new Stat("recipe", recipesStat);
+public class MultiConsumer extends ConsumePower {
 
     public Recipe[] recipes;
 

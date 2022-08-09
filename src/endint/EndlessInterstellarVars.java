@@ -38,6 +38,11 @@ public class EndlessInterstellarVars extends ModVars{
     public static void load(){
         onLoad.each(Runnable::run);
         onLoad.clear();
+        //settings = new ModSettings();
+        //if (!headless) listener.add(modUI = new ModUI());
+        //listener.add(netClient = new ModNetClient());
+        //listener.add(netServer = new ModNetServer());
+        //listener.add(logic = new ModLogic());
     }
 
 

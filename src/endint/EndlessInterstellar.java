@@ -1,6 +1,5 @@
 package endint;
 
-import endint.tools.Reflections;
 import mindustry.ctype.*;
 import mindustry.world.blocks.power.PowerGraph;
 import mma.*;
@@ -29,7 +28,6 @@ public class EndlessInterstellar extends MMAMod {
         super.init();
         if (neededInit)
             listener.init();
-        Reflections.dePrivate(PowerGraph.class, "all");
     }
 
     /**
