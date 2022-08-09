@@ -5,7 +5,7 @@ import endint.type.Temperaturec;
 
 @TemperatureBlock
 public class SeptangoMultiCrafter extends MultiCrafter{
-    public float maxWorkableTemperature = -210, minWorkableTemperature = 1000;
+    public float minWorkableTemperature = -210f, maxWorkableTemperature = 1000f;
     public int temperatureProductRange = -1;
 
     public SeptangoMultiCrafter(String name) {
@@ -37,7 +37,7 @@ public class SeptangoMultiCrafter extends MultiCrafter{
 
         @Override
         public float minWorkableTemperature() {
-            return Temperaturec.super.minWorkableTemperature();
+            return minWorkableTemperature;
         }
     }
 }

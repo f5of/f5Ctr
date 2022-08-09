@@ -3,7 +3,7 @@ package endint.content;
 import arc.graphics.*;
 import mindustry.type.*;
 
-public class EIItems{
+public class ModItems {
     public static Item salt, goldPowder, aluminium, crinite, dalcite, ice, carbon;
 
     public static void load(){

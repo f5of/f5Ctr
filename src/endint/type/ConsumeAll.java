@@ -169,10 +169,10 @@ public class ConsumeAll {
 
                     if(tempRecipe.powerOut != 0) table.add(ModMath.fixFloat(tempRecipe.powerOut / tempRecipe.craftTime, 2)
                             + " " + Core.bundle.get("unit.power-second")).padRight(8);
+
                 });
-                a.row();
             }
-        }).left();
+        }).growX().left();
     }
 
     void showStatsOnTable(Table table, Recipe recipe){

@@ -4,13 +4,11 @@ import mindustry.world.meta.*;
 
 public class ModStats{
     public static final StatUnit
-            temperatureUnit = new StatUnit("temperature-unit"),
-            waterUnit = new StatUnit("water-unit"),
-            itemUnit = new StatUnit("item-unit");
+            unit = null;
 
     public static final StatCat
-            temperature = new StatCat("temperature");
+            recipesCat = new StatCat("recipes");
 
     public static final Stat
-            tempProduct = new Stat("tempProduct", temperature);
+            recipeStat = new Stat("recipe", recipesCat);
 }
