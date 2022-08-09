@@ -15,9 +15,35 @@ import mindustry.world.*;
 import static mindustry.type.ItemStack.with;
 
 public class ModBlocks{
-    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler, engine;
+    public static Block monolith, midas, criniteFurnace, mixer, wither, furnace, crystallizer, heater, boiler, engine,
+            forcedEngine, block;
 
     public static void load(){
+        block = new MultiCrafter("block"){{
+            requirements(Category.crafting, ItemStack.with(ModItems.crinite, 40, Items.copper, 100, Items.titanium, 50,
+                    ModItems.goldPowder, 100));
+
+            health = 300;
+            itemCapacity = 30;
+
+            size = 4;
+
+            consume = new ConsumeAll(new ConsumeAll.Recipe(){{
+                liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20, Liquids.oil, 50);
+                itemsIn = ItemStack.with(Items.titanium, 20, Items.graphite, 10, Items.lead, 5);
+                itemsOut = ItemStack.with(ModItems.goldPowder, 10, ModItems.salt, 20);
+                liquidsOut = LiquidStack.with(Liquids.water, 10, Liquids.slag, 10);
+                craftTime = 600;
+            }},
+                    new ConsumeAll.Recipe(){{
+                        liquidsIn = LiquidStack.with(Liquids.water, 30, Liquids.oil, 1);
+                        itemsIn = ItemStack.with(Items.copper, 10, Items.graphite, 10, Items.lead, 20);
+                        itemsOut = ItemStack.with(Items.surgeAlloy, 8, ModItems.salt, 20);
+                        liquidsOut = LiquidStack.with(Liquids.water, 1, Liquids.slag, 80);
+                        craftTime = 600;
+                    }});
+        }};
+
         monolith = new BuildCoreBlock("monolith"){{
             requirements(Category.effect, with(Items.silicon, 150, Items.thorium, 60));
             outlineColor = Pal.darkOutline;
@@ -51,7 +77,6 @@ public class ModBlocks{
 
             craftTime = 13 * 60;
 
-            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.lead));
 
             addTemperatureBar(this);
@@ -83,7 +108,6 @@ public class ModBlocks{
 
             craftTime = 3 * 60;
 
-            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.fireCompound));
 
             addTemperatureBar(this);
@@ -116,7 +140,6 @@ public class ModBlocks{
 
             craftTime = 2 * 60;
 
-            consumePower(200f / 60f);
             consume(new MultiConsumer(ModRecipes.water));
 
             addTemperatureBar(this);
@@ -134,7 +157,6 @@ public class ModBlocks{
 
             craftTime = 5 * 60;
 
-            consumePower(20f / 60f);
             consume(new MultiConsumer(ModRecipes.carbon));
 
             addTemperatureBar(this);
@@ -168,6 +190,22 @@ public class ModBlocks{
             liquidCapacity = 30f;
 
             consume(new MultiConsumer(ModRecipes.energyEngine));
+
+            addTemperatureBar(this);
+        }};
+
+        forcedEngine = new SeptangoFactory("forced-engine"){{
+            requirements(Category.crafting, ItemStack.with(ModItems.carbon, 10, ModItems.salt, 30,
+                    ModItems.crinite, 30, Items.titanium, 200));
+
+            size = 3;
+            health = 200;
+
+            craftTime = 600f;
+
+            liquidCapacity = 60f;
+
+            consume(new MultiConsumer(ModRecipes.energyForcedEngineOil, ModRecipes.energyForcedEngineFireCompound));
 
             addTemperatureBar(this);
         }};
