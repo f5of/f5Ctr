@@ -41,8 +41,8 @@ public class ModBlocks{
         }};
 
         midas = new SeptangoFactory("midas"){{
-            requirements(Category.crafting, ItemStack.with(ModItems.crinite, 40, Items.copper, 100, Items.titanium, 50,
-            ModItems.goldPowder, 100));
+            requirements(Category.crafting, ItemStack.with(EIItems.crinite, 40, Items.copper, 100, Items.titanium, 50,
+            EIItems.goldPowder, 100));
 
             health = 300;
             itemCapacity = 30;
@@ -58,7 +58,7 @@ public class ModBlocks{
         }};
 
         criniteFurnace = new SeptangoFactory("crinite-furnace"){{
-            requirements(Category.crafting, ItemStack.with(ModItems.aluminium, 20, Items.copper, 50, Items.titanium, 40));
+            requirements(Category.crafting, ItemStack.with(EIItems.aluminium, 20, Items.copper, 50, Items.titanium, 40));
 
             health = 150;
             itemCapacity = 20;
@@ -73,7 +73,7 @@ public class ModBlocks{
         }};
 
         mixer = new SeptangoFactory("mixer"){{
-            requirements(Category.crafting, ItemStack.with(ModItems.crinite, 60, Items.titanium, 240));
+            requirements(Category.crafting, ItemStack.with(EIItems.crinite, 60, Items.titanium, 240));
 
             health = 500;
             itemCapacity = 20;
@@ -90,7 +90,7 @@ public class ModBlocks{
         }};
 
         wither = new SeptangoFactory("wither"){{
-            requirements(Category.crafting, ItemStack.with(ModItems.crinite, 40, Items.titanium, 20, ModItems.salt, 100));
+            requirements(Category.crafting, ItemStack.with(EIItems.crinite, 40, Items.titanium, 20, EIItems.salt, 100));
 
             health = 400;
             itemCapacity = 20;
@@ -106,7 +106,7 @@ public class ModBlocks{
         }};
 
         furnace = new SeptangoFactory("furnace"){{
-            requirements(Category.crafting, ItemStack.with(ModItems.crinite, 60, Items.titanium, 240));
+            requirements(Category.crafting, ItemStack.with(EIItems.crinite, 60, Items.titanium, 240));
 
             health = 500;
             itemCapacity = 10;
@@ -123,8 +123,8 @@ public class ModBlocks{
         }};
 
         crystallizer = new SeptangoFactory("crystallizer"){{
-            requirements(Category.crafting, ItemStack.with(ModItems.crinite, 50, ModItems.salt, 20,
-            ModItems.aluminium, 30, ModItems.carbon, 10, ModItems.goldPowder, 10));
+            requirements(Category.crafting, ItemStack.with(EIItems.crinite, 50, EIItems.salt, 20,
+            EIItems.aluminium, 30, EIItems.carbon, 10, EIItems.goldPowder, 10));
 
             health = 500;
             itemCapacity = 15;
@@ -141,8 +141,8 @@ public class ModBlocks{
         }};
 
         boiler = new SeptangoFactory("boiler"){{
-            requirements(Category.crafting, ItemStack.with(ModItems.aluminium, 20, Items.titanium, 30,
-            ModItems.crinite, 40));
+            requirements(Category.crafting, ItemStack.with(EIItems.aluminium, 20, Items.titanium, 30,
+            EIItems.crinite, 40));
 
             size = 3;
             health = 100;
@@ -158,7 +158,7 @@ public class ModBlocks{
 
         engine = new SeptangoFactory("engine"){{
             requirements(Category.crafting, ItemStack.with(Items.copper, 20, Items.titanium, 180,
-            ModItems.crinite, 20));
+            EIItems.crinite, 20));
 
             size = 3;
             health = 200;

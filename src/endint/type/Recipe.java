@@ -7,5 +7,5 @@ public class Recipe {
     public ItemStack[] itemsIn = {}, itemsOut = {};
     public float energyIn = 0f, energyOut = 0f;
     public float craftTime = 60f;
-    public float temperatureProd = 0f;
+    public float temperatureOut = 0f;
 }

@@ -59,7 +59,7 @@ public class EndlessInterstellarVars extends ModVars{
     @Override
     /**This is where you initialize your content lists. But do not forget about correct order.
      * @note correct order:
-     *  ModItems.load()
+     *  EIItems.load()
      *  ModStatusEffects.load()
      *  ModLiquids.load()
      *  ModBullets.load()
@@ -70,7 +70,7 @@ public class EndlessInterstellarVars extends ModVars{
      *  ModTechTree.load()
      * */
     public void loadContent(){
-        ModItems.load();
+        EIItems.load();
         ModLiquids.load();
         ModRecipes.load();
         ModBlocks.load();

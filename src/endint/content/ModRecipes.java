@@ -11,7 +11,7 @@ public class ModRecipes {
 
     public static void load(){
         lead = new Recipe(){{
-            itemsIn = ItemStack.with(ModItems.goldPowder, 15);
+            itemsIn = ItemStack.with(EIItems.goldPowder, 15);
             itemsOut = ItemStack.with(Items.lead, 1);
             craftTime = 13f * 60f;
             energyIn = 200f;
@@ -19,13 +19,13 @@ public class ModRecipes {
 
         crinite = new Recipe(){{
             itemsIn = ItemStack.with(Items.copper, 3, Items.titanium, 1);
-            itemsOut = ItemStack.with(ModItems.crinite, 1);
+            itemsOut = ItemStack.with(EIItems.crinite, 1);
             energyIn = 40f;
             craftTime = 5f * 60f;
         }};
 
         fireCompound = new Recipe(){{
-            itemsIn = ItemStack.with(ModItems.dalcite, 10);
+            itemsIn = ItemStack.with(EIItems.dalcite, 10);
             liquidsIn = LiquidStack.with(Liquids.oil, 30);
             liquidsOut = LiquidStack.with(ModLiquids.fireCompound, 40);
             energyIn = 200;
@@ -33,15 +33,15 @@ public class ModRecipes {
         }};
 
         dalcite = new Recipe(){{
-            itemsIn = ItemStack.with(ModItems.salt, 5);
+            itemsIn = ItemStack.with(EIItems.salt, 5);
             liquidsIn = LiquidStack.with(Liquids.oil, 10);
-            itemsOut = ItemStack.with(ModItems.dalcite, 5);
+            itemsOut = ItemStack.with(EIItems.dalcite, 5);
             energyIn = 44f;
             craftTime = 5f * 60f;
         }};
 
         water = new Recipe(){{
-            itemsIn = ItemStack.with(ModItems.ice, 1);
+            itemsIn = ItemStack.with(EIItems.ice, 1);
             liquidsOut = LiquidStack.with(Liquids.water, 10);
             energyIn = 5f;
             craftTime = 2f * 60f;
@@ -50,27 +50,27 @@ public class ModRecipes {
         carbon = new Recipe(){{
             itemsIn = ItemStack.with(Items.titanium, 5);
             liquidsIn = LiquidStack.with(Liquids.oil, 20);
-            itemsOut = ItemStack.with(ModItems.carbon, 2);
+            itemsOut = ItemStack.with(EIItems.carbon, 2);
             energyIn = 20f;
             craftTime = 5f * 60f;
         }};
 
         oilHeat = new Recipe(){{
             liquidsIn = LiquidStack.with(Liquids.oil, 20);
-            temperatureProd = 5f;
+            temperatureOut = 5f;
             craftTime = 60f;
         }};
 
         fireCompoundHeat = new Recipe(){{
             liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20);
-            temperatureProd = 10f;
+            temperatureOut = 10f;
             craftTime = 60f;
         }};
 
         energyEngine = new Recipe(){{
             liquidsIn = LiquidStack.with(Liquids.oil, 10);
             energyOut = 100;
-            temperatureProd = 1f;
+            temperatureOut = 1f;
             craftTime = 60f;
         }};
     }

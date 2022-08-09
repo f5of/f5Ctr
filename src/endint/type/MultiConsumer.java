@@ -82,8 +82,8 @@ public class MultiConsumer extends Consume {
                 }
                 if(recipe.energyOut > 0f)
                     c.add(Strings.fixed(recipe.energyOut, 1) + " " + Core.bundle.get("unit.power")).padRight(8);
-                if(recipe.temperatureProd > 0)
-                c.add(recipe.temperatureProd + Core.bundle.get("unit.temperature")).padRight(8);
+                if(recipe.temperatureOut > 0)
+                c.add(recipe.temperatureOut + Core.bundle.get("unit.temperature")).padRight(8);
 
                 c.row();
             }
@@ -139,7 +139,7 @@ public class MultiConsumer extends Consume {
         if(hasPower(build))
         build.power.graph.transferPower(tempRecipe.energyOut);
 
-        if(build instanceof Temperaturec) ((Temperaturec) build).addTemperature(tempRecipe.temperatureProd);
+        if(build instanceof Temperaturec) ((Temperaturec) build).addTemperature(tempRecipe.temperatureOut);
     }
 
     @Override
@@ -170,8 +170,8 @@ public class MultiConsumer extends Consume {
                     }
                     if(recipe.energyOut > 0f)
                     c.add(Strings.fixed(recipe.energyOut, 1) + " " + Core.bundle.get("unit.power")).padRight(8);
-                    if(recipe.temperatureProd > 0)
-                    c.add(recipe.temperatureProd + Core.bundle.get("unit.temperature")).padRight(8);
+                    if(recipe.temperatureOut > 0)
+                    c.add(recipe.temperatureOut + Core.bundle.get("unit.temperature")).padRight(8);
 
                 }).growX().pad(5);
                 table.row();
