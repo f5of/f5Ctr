@@ -2,7 +2,6 @@ package endint.content;
 
 import arc.math.*;
 import arc.util.*;
-import endint.math.ModMath;
 import endint.type.*;
 import endint.world.blocks.*;
 import endint.world.blocks.crafting.*;
@@ -31,14 +30,14 @@ public class ModBlocks{
 
             size = 4;
 
-            consume = new ConsumeAll(new ConsumeAll.Recipe(){{
+            consume = new RecipeConsume(new RecipeConsume.Recipe(){{
                 liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20, Liquids.oil, 50);
                 itemsIn = ItemStack.with(Items.titanium, 20, Items.graphite, 10, Items.lead, 5);
                 itemsOut = ItemStack.with(ModItems.goldPowder, 10, ModItems.salt, 20);
                 liquidsOut = LiquidStack.with(Liquids.water, 10, Liquids.slag, 10);
                 craftTime = 600;
             }},
-                    new ConsumeAll.Recipe(){{
+                    new RecipeConsume.Recipe(){{
                         liquidsIn = LiquidStack.with(Liquids.water, 30, Liquids.oil, 1);
                         itemsIn = ItemStack.with(Items.copper, 10, Items.graphite, 10, Items.lead, 20);
                         itemsOut = ItemStack.with(Items.surgeAlloy, 8, ModItems.salt, 20);
@@ -76,7 +75,7 @@ public class ModBlocks{
 
             size = 4;
 
-            consume = new ConsumeAll(ModRecipes.lead);
+            consume = new RecipeConsume(ModRecipes.lead);
         }};
 
         criniteFurnace = new SeptangoMultiCrafter("crinite-furnace"){{
@@ -87,7 +86,7 @@ public class ModBlocks{
 
             size = 2;
 
-            consume = new ConsumeAll(ModRecipes.crinite);
+            consume = new RecipeConsume(ModRecipes.crinite);
         }};
 
         mixer = new SeptangoMultiCrafter("mixer"){{
@@ -99,7 +98,7 @@ public class ModBlocks{
 
             size = 3;
 
-            consume = new ConsumeAll(ModRecipes.fireCompound);
+            consume = new RecipeConsume(ModRecipes.fireCompound);
         }};
 
         wither = new SeptangoMultiCrafter("wither"){{
@@ -111,7 +110,7 @@ public class ModBlocks{
 
             size = 3;
 
-            consume = new ConsumeAll(ModRecipes.dalcite);
+            consume = new RecipeConsume(ModRecipes.dalcite);
         }};
 
         furnace = new SeptangoMultiCrafter("furnace"){{
@@ -123,7 +122,7 @@ public class ModBlocks{
 
             size = 1;
 
-            consume = new ConsumeAll(ModRecipes.water);
+            consume = new RecipeConsume(ModRecipes.water);
         }};
 
         crystallizer = new SeptangoMultiCrafter("crystallizer"){{
@@ -136,7 +135,7 @@ public class ModBlocks{
 
             size = 2;
 
-            consume = new ConsumeAll(ModRecipes.carbon);
+            consume = new RecipeConsume(ModRecipes.carbon);
         }};
 
         boiler = new SeptangoMultiCrafter("boiler"){{
@@ -148,7 +147,7 @@ public class ModBlocks{
 
             liquidCapacity = 60;
 
-            consume = new ConsumeAll(ModRecipes.oilHeat, ModRecipes.fireCompoundHeat);
+            consume = new RecipeConsume(ModRecipes.oilHeat, ModRecipes.fireCompoundHeat);
         }};
 
         engine = new SeptangoMultiCrafter("engine"){{
@@ -160,7 +159,7 @@ public class ModBlocks{
 
             liquidCapacity = 30f;
 
-            consume = new ConsumeAll(ModRecipes.energyEngine);
+            consume = new RecipeConsume(ModRecipes.energyEngine);
         }};
 
         forcedEngine = new SeptangoMultiCrafter("forced-engine"){{
@@ -172,7 +171,7 @@ public class ModBlocks{
 
             liquidCapacity = 60f;
 
-            consume = new ConsumeAll(ModRecipes.energyForcedEngineOil, ModRecipes.energyForcedEngineFireCompound);
+            consume = new RecipeConsume(ModRecipes.energyForcedEngineOil, ModRecipes.energyForcedEngineFireCompound);
 
         }};
 
@@ -187,7 +186,7 @@ public class ModBlocks{
                         ((Block) field.get(null)).addBar("temperature", (Building e) -> {
                             Temperaturec entity = e.as();
                             return new Bar(
-                                    () -> ModMath.fixFloat(entity.temperature(), 1) + "",
+                                    () -> Strings.fixed(entity.temperature(), 1) + "",
                                     () -> Liquids.cryofluid.barColor(),
                                     () -> Mathf.clamp(entity.temperature() - entity.minWorkableTemperature(), 0f,
                                                 entity.maxWorkableTemperature() - entity.minWorkableTemperature()) /

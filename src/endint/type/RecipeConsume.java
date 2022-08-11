@@ -1,13 +1,10 @@
 package endint.type;
 
 import arc.Core;
-import arc.func.Prov;
 import arc.scene.ui.Button;
 import arc.scene.ui.Image;
 import arc.scene.ui.layout.Table;
-import arc.util.Log;
-import arc.util.Strings;
-import endint.math.ModMath;
+import arc.util.*;
 import endint.world.blocks.crafting.MultiCrafter;
 import mindustry.gen.Building;
 import mindustry.gen.Tex;
@@ -20,28 +17,25 @@ import mindustry.ui.Bar;
 import mindustry.ui.ItemImage;
 import mindustry.ui.ReqImage;
 import mindustry.world.Block;
-import mindustry.world.consumers.ConsumePower;
+import mindustry.world.consumers.*;
 import mindustry.world.meta.BlockStatus;
-import mindustry.world.meta.Stat;
-import mindustry.world.meta.StatCat;
 import mindustry.world.meta.Stats;
 
 import static endint.content.ModStats.recipeStat;
 
-public class ConsumeAll {
+public class RecipeConsume{
 
     public Recipe[] recipes;
-    public Prov<ConsumePower> power;
+    public RecipeConsumePower power;
 
     protected Recipe tempRecipe;
 
-    public ConsumeAll(Recipe... recipes) {
+    public RecipeConsume(Recipe... recipes) {
         this.recipes = recipes;
     }
 
     public void init(Block block){
-        ConsumePower cons = new ConsumePower();
-        power = () -> cons;
+        power = new RecipeConsumePower();
         block.hasConsumers = true;
         boolean i = false, l = false, p = false, pi = false, po = false;
         float ml = 0;
@@ -78,7 +72,7 @@ public class ConsumeAll {
         block.consumesPower = pi;
         block.outputsPower = po;
 
-        block.consume(power.get());
+        block.consume(power);
 
         setBars(block);
     }
@@ -148,13 +142,13 @@ public class ConsumeAll {
                                 () -> build.liquids.get(liquidStack.liquid) >= liquidStack.amount)).padRight(8);
                     }
 
-                    if(tempRecipe.powerIn != 0) c.add(ModMath.fixFloat(tempRecipe.powerIn / tempRecipe.craftTime, 2)
+                    if(tempRecipe.powerIn != 0) c.add(Strings.fixed(tempRecipe.powerIn / tempRecipe.craftTime, 2)
                             + " " + Core.bundle.get("unit.power-second")).padRight(8);
 
                     c.add(new Image(Core.atlas.find("f5of-arrow"))).padRight(8);
-                    c.add(ModMath.fixFloat(tempRecipe.craftTime / 60f, 2)
+                    c.add(Strings.fixed(tempRecipe.craftTime / 60f, 2)
                             + " " + Core.bundle.get("unit.seconds")).padRight(8);
-                    c.add(tempRecipe.temperatureProd + " " + Core.bundle.get("unit.temperature")).padRight(8);
+                    c.add(tempRecipe.temperatureOut + " " + Core.bundle.get("unit.temperature")).padRight(8);
 
                     for (ItemStack itemStack : tempRecipe.itemsOut) {
                         c.add(new ItemImage(itemStack.item.uiIcon, itemStack.amount)).padRight(8);
@@ -163,7 +157,7 @@ public class ConsumeAll {
                         c.add(new ItemImage(liquidStack.liquid.uiIcon, (int) liquidStack.amount)).padRight(8);
                     }
 
-                    if(tempRecipe.powerOut != 0) c.add(ModMath.fixFloat(tempRecipe.powerOut / tempRecipe.craftTime, 2)
+                    if(tempRecipe.powerOut != 0) c.add(Strings.fixed(tempRecipe.powerOut / tempRecipe.craftTime, 2)
                             + " " + Core.bundle.get("unit.power-second")).padRight(8);
 
                 });
@@ -179,12 +173,12 @@ public class ConsumeAll {
             table.add(new ItemImage(liquidStack.liquid.uiIcon, (int) liquidStack.amount)).padRight(8);
         }
 
-        if(recipe.powerIn != 0) table.add(ModMath.fixFloat(recipe.powerIn / recipe.craftTime, 2)
+        if(recipe.powerIn != 0) table.add(Strings.fixed(recipe.powerIn / recipe.craftTime, 2)
                 + " " + Core.bundle.get("unit.power-second")).padRight(8);
 
         table.add(new Image(Core.atlas.find("f5of-arrow"))).padRight(8);
-        table.add(ModMath.fixFloat(recipe.craftTime / 60f, 2) + " " + Core.bundle.get("unit.seconds")).padRight(8);
-        table.add(recipe.temperatureProd + " " + Core.bundle.get("unit.temperature")).padRight(8);
+        table.add(Strings.fixed(recipe.craftTime / 60f, 2) + " " + Core.bundle.get("unit.seconds")).padRight(8);
+        table.add(recipe.temperatureOut + " " + Core.bundle.get("unit.temperature")).padRight(8);
 
         for (ItemStack itemStack : recipe.itemsOut) {
             table.add(new ItemImage(itemStack.item.uiIcon, itemStack.amount)).padRight(8);
@@ -193,7 +187,7 @@ public class ConsumeAll {
             table.add(new ItemImage(liquidStack.liquid.uiIcon, (int) liquidStack.amount)).padRight(8);
         }
 
-        if(recipe.powerOut != 0) table.add(ModMath.fixFloat(recipe.powerOut / recipe.craftTime, 2)
+        if(recipe.powerOut != 0) table.add(Strings.fixed(recipe.powerOut / recipe.craftTime, 2)
                 + " " + Core.bundle.get("unit.power-second")).padRight(8);
     }
 
@@ -213,7 +207,7 @@ public class ConsumeAll {
     }
 
     public BlockStatus canWork(MultiCrafter.MultiCrafterBuild build){
-        tempRecipe = getRecipe(build.currentRecipe);
+        tempRecipe = recipes[build.currentRecipe];
 
         for (ItemStack itemStack : tempRecipe.itemsIn)
             if(!build.items.has(itemStack.item, itemStack.amount))
@@ -234,35 +228,31 @@ public class ConsumeAll {
     }
 
     public void handleCraft(MultiCrafter.MultiCrafterBuild build){
-        tempRecipe = getRecipe(build.currentRecipe);
+        tempRecipe = recipes[build.currentRecipe];
 
         for (ItemStack itemStack : tempRecipe.itemsIn) build.items.remove(itemStack.item, itemStack.amount);
         for (LiquidStack liquidStack : tempRecipe.liquidsIn) build.liquids.remove(liquidStack.liquid, liquidStack.amount);
         for (ItemStack itemStack : tempRecipe.itemsOut) build.items.add(itemStack.item, itemStack.amount);
         for (LiquidStack liquidStack : tempRecipe.liquidsOut) build.liquids.add(liquidStack.liquid, liquidStack.amount);
 
-        if(build instanceof Temperaturec) ((Temperaturec) build).addTemperature(tempRecipe.temperatureProd);
+        if(build instanceof Temperaturec) ((Temperaturec) build).addTemperature(tempRecipe.temperatureOut);
     }
 
     public float getEfficiency(MultiCrafter.MultiCrafterBuild build){
         if(canWork(build) != BlockStatus.active) return 0f;
-        if(build.power != null) return getRecipe(build.currentRecipe).powerIn != 0 ? build.power.status : 1f;
+        if(build.power != null) return recipes[build.currentRecipe].powerIn != 0 ? build.power.status : 1f;
         return 1f;
     }
 
     void setConsumePower(Recipe recipe){
-        power.get().powerIn = tempRecipe.powerIn / recipe.craftTime;
+        power.powerIn = recipe.powerIn / recipe.craftTime;
     }
 
     void setRecipe(MultiCrafter.MultiCrafterBuild build, int i){
         build.currentRecipe = i;
-        tempRecipe = getRecipe(build.currentRecipe);
-        setConsumePower(tempRecipe);
+        setConsumePower(recipes[build.currentRecipe]);
     }
 
-    public Recipe getRecipe(int ind){
-        return recipes[ind];
-    }
 
     public void buildConfiguration(MultiCrafter.MultiCrafterBuild build, Table table){
         int ind = 0;
@@ -293,13 +283,13 @@ public class ConsumeAll {
         public ItemStack[] itemsIn = {}, itemsOut = {};
         public float powerIn, powerOut;
         public int craftTime = 60;
-        public float temperatureProd = 0f;
+        public float temperatureOut = 0f;
     }
 
-    public static class ConsumePower extends mindustry.world.consumers.ConsumePower{
+    static class RecipeConsumePower extends ConsumePower{
         public float powerIn = 0;
 
-        public ConsumePower(){
+        public RecipeConsumePower(){
 
         }
 

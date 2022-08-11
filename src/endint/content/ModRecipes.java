@@ -1,6 +1,6 @@
 package endint.content;
 
-import endint.type.ConsumeAll.Recipe;
+import endint.type.RecipeConsume.Recipe;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.type.ItemStack;
@@ -58,34 +58,34 @@ public class ModRecipes {
 
         oilHeat = new Recipe(){{
             liquidsIn = LiquidStack.with(Liquids.oil, 20);
-            temperatureProd = 5f;
+            temperatureOut = 5f;
             craftTime = 60;
         }};
 
         fireCompoundHeat = new Recipe(){{
             liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20);
-            temperatureProd = 10f;
+            temperatureOut = 10f;
             craftTime = 60;
         }};
 
         energyEngine = new Recipe(){{
             liquidsIn = LiquidStack.with(Liquids.oil, 10);
             powerOut = 100;
-            temperatureProd = 1f;
+            temperatureOut = 1f;
             craftTime = 60;
         }};
 
         energyForcedEngineOil = new Recipe(){{
             liquidsIn = LiquidStack.with(Liquids.oil, 20);
             powerOut = 240;
-            temperatureProd = 2f;
+            temperatureOut = 2f;
             craftTime = 60;
         }};
 
         energyForcedEngineFireCompound = new Recipe(){{
             liquidsIn = LiquidStack.with(ModLiquids.fireCompound, 20);
             powerOut = 480;
-            temperatureProd = 3f;
+            temperatureOut = 3f;
             craftTime = 60;
         }};
     }

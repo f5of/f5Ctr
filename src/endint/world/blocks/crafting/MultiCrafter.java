@@ -2,11 +2,10 @@ package endint.world.blocks.crafting;
 
 import arc.graphics.Color;
 import arc.scene.ui.layout.Table;
-import endint.type.ConsumeAll;
+import endint.type.RecipeConsume;
 import mindustry.gen.Building;
 import mindustry.graphics.Pal;
 import mindustry.type.ItemStack;
-import mindustry.type.Liquid;
 import mindustry.type.LiquidStack;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
@@ -14,7 +13,7 @@ import mindustry.world.consumers.Consume;
 import mindustry.world.meta.BlockStatus;
 
 public class MultiCrafter extends Block {
-    public ConsumeAll consume;
+    public RecipeConsume consume;
 
     public MultiCrafter(String name) {
         super(name);
@@ -61,7 +60,7 @@ public class MultiCrafter extends Block {
         @Override
         public void updateTile() {
             if(consume.canWork(this) == BlockStatus.active) {
-                progress += 1f / consume.getRecipe(currentRecipe).craftTime
+                progress += 1f / consume.recipes[currentRecipe].craftTime
                         * consume.getEfficiency(this);
 
             }
@@ -73,10 +72,10 @@ public class MultiCrafter extends Block {
             }
 
 
-            for (ItemStack itemStack : consume.getRecipe(currentRecipe).itemsOut) {
+            for (ItemStack itemStack : consume.recipes[currentRecipe].itemsOut) {
                 dump(itemStack.item);
             }
-            for (LiquidStack liquidStack : consume.getRecipe(currentRecipe).liquidsOut) {
+            for (LiquidStack liquidStack : consume.recipes[currentRecipe].liquidsOut) {
                 dumpLiquid(liquidStack.liquid);
             }
         }
@@ -93,7 +92,7 @@ public class MultiCrafter extends Block {
 
         @Override
         public float getPowerProduction() {
-            return consume.getRecipe(currentRecipe).powerOut / consume.getRecipe(currentRecipe).craftTime
+            return consume.recipes[currentRecipe].powerOut / consume.recipes[currentRecipe].craftTime
                     * consume.getEfficiency(this);
         }
 
