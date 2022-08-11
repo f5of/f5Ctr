@@ -174,28 +174,6 @@ public class ModBlocks{
             consume = new RecipeConsume(ModRecipes.energyForcedEngineOil, ModRecipes.energyForcedEngineFireCompound);
 
         }};
-
-        addTemperatureBar();
     }
 
-    static void addTemperatureBar(){
-        for (Field field : ModBlocks.class.getFields()) {
-            try {
-                if (field.get(null) instanceof Block)
-                    if (((Block) field.get(null)).buildType.get() instanceof Temperaturec)
-                        ((Block) field.get(null)).addBar("temperature", (Building e) -> {
-                            Temperaturec entity = e.as();
-                            return new Bar(
-                                    () -> Strings.fixed(entity.temperature(), 1) + "",
-                                    () -> Liquids.cryofluid.barColor(),
-                                    () -> Mathf.clamp(entity.temperature() - entity.minWorkableTemperature(), 0f,
-                                                entity.maxWorkableTemperature() - entity.minWorkableTemperature()) /
-                                                (entity.maxWorkableTemperature() - entity.minWorkableTemperature()));
-                        }
-                );
-            } catch (Exception ignored){
-
-            }
-        }
-    }
 }

@@ -1,16 +1,16 @@
 package endint.world.blocks.crafting;
 
-import arc.graphics.Color;
-import arc.scene.ui.layout.Table;
-import endint.type.RecipeConsume;
-import mindustry.gen.Building;
-import mindustry.graphics.Pal;
-import mindustry.type.ItemStack;
-import mindustry.type.LiquidStack;
-import mindustry.ui.Bar;
-import mindustry.world.Block;
-import mindustry.world.consumers.Consume;
-import mindustry.world.meta.BlockStatus;
+import arc.graphics.*;
+import arc.scene.ui.layout.*;
+import arc.util.*;
+import endint.type.*;
+import mindustry.gen.*;
+import mindustry.graphics.*;
+import mindustry.type.*;
+import mindustry.ui.*;
+import mindustry.world.*;
+import mindustry.world.consumers.*;
+import mindustry.world.meta.*;
 
 public class MultiCrafter extends Block {
     public RecipeConsume consume;
@@ -59,16 +59,18 @@ public class MultiCrafter extends Block {
 
         @Override
         public void updateTile() {
-            if(consume.canWork(this) == BlockStatus.active) {
+            if(status() == BlockStatus.active) {
+                //TODO add edelta()
                 progress += 1f / consume.recipes[currentRecipe].craftTime
-                        * consume.getEfficiency(this);
+                        * consume.getEfficiency(this) * Time.delta;
 
+            }else{
+                progress = 0f;
             }
-            else progress = 0f;
 
             if(progress >= 1f) {
                 consume.handleCraft(this);
-                progress = 0f;
+                progress %= 1f;
             }
 
 
@@ -87,7 +89,7 @@ public class MultiCrafter extends Block {
 
         @Override
         public BlockStatus status() {
-            return consume.canWork(this);
+            return consume.status(this);
         }
 
         @Override

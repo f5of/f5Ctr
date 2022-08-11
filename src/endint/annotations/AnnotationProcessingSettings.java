@@ -1,5 +1,6 @@
 package endint.annotations;
 
+import endint.*;
 import mma.annotations.ModAnnotations.*;
 
 
