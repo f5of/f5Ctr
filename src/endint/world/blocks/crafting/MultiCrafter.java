@@ -60,8 +60,11 @@ public class MultiCrafter extends Block {
 
         @Override
         public void updateTile() {
-            if(consume.canWork(this) == BlockStatus.active) progress += 1f / consume.getRecipe(currentRecipe).craftTime
-                    * consume.getEfficiency(this);
+            if(consume.canWork(this) == BlockStatus.active) {
+                progress += 1f / consume.getRecipe(currentRecipe).craftTime
+                        * consume.getEfficiency(this);
+
+            }
             else progress = 0f;
 
             if(progress >= 1f) {
