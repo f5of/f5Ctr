@@ -148,17 +148,13 @@ public class ConsumeAll {
                                 () -> build.liquids.get(liquidStack.liquid) >= liquidStack.amount)).padRight(8);
                     }
 
-                    if(tempRecipe.powerIn != 0) table.add(ModMath.fixFloat(tempRecipe.powerIn / tempRecipe.craftTime, 2)
+                    if(tempRecipe.powerIn != 0) c.add(ModMath.fixFloat(tempRecipe.powerIn / tempRecipe.craftTime, 2)
                             + " " + Core.bundle.get("unit.power-second")).padRight(8);
-
-                    //c.row();
 
                     c.add(new Image(Core.atlas.find("f5of-arrow"))).padRight(8);
                     c.add(ModMath.fixFloat(tempRecipe.craftTime / 60f, 2)
                             + " " + Core.bundle.get("unit.seconds")).padRight(8);
                     c.add(tempRecipe.temperatureProd + " " + Core.bundle.get("unit.temperature")).padRight(8);
-
-                    //c.row();
 
                     for (ItemStack itemStack : tempRecipe.itemsOut) {
                         c.add(new ItemImage(itemStack.item.uiIcon, itemStack.amount)).padRight(8);
@@ -167,7 +163,7 @@ public class ConsumeAll {
                         c.add(new ItemImage(liquidStack.liquid.uiIcon, (int) liquidStack.amount)).padRight(8);
                     }
 
-                    if(tempRecipe.powerOut != 0) table.add(ModMath.fixFloat(tempRecipe.powerOut / tempRecipe.craftTime, 2)
+                    if(tempRecipe.powerOut != 0) c.add(ModMath.fixFloat(tempRecipe.powerOut / tempRecipe.craftTime, 2)
                             + " " + Core.bundle.get("unit.power-second")).padRight(8);
 
                 });
@@ -216,10 +212,6 @@ public class ConsumeAll {
         });
     }
 
-    public Recipe getRecipe(int ind){
-        return recipes[ind];
-    }
-
     public BlockStatus canWork(MultiCrafter.MultiCrafterBuild build){
         tempRecipe = getRecipe(build.currentRecipe);
 
@@ -241,17 +233,6 @@ public class ConsumeAll {
         return BlockStatus.active;
     }
 
-    public float getEfficiency(MultiCrafter.MultiCrafterBuild build){
-        if(canWork(build) != BlockStatus.active) return 0f;
-        if(build.power != null) return getRecipe(build.currentRecipe).powerIn != 0 ? build.power.status : 1f;
-        return 1f;
-    }
-
-    void setConsumePower(MultiCrafter.MultiCrafterBuild build){
-        tempRecipe = getRecipe(build.currentRecipe);
-        power.get().powerIn = tempRecipe.powerIn / getRecipe(build.currentRecipe).craftTime;
-    }
-
     public void handleCraft(MultiCrafter.MultiCrafterBuild build){
         tempRecipe = getRecipe(build.currentRecipe);
 
@@ -263,6 +244,26 @@ public class ConsumeAll {
         if(build instanceof Temperaturec) ((Temperaturec) build).addTemperature(tempRecipe.temperatureProd);
     }
 
+    public float getEfficiency(MultiCrafter.MultiCrafterBuild build){
+        if(canWork(build) != BlockStatus.active) return 0f;
+        if(build.power != null) return getRecipe(build.currentRecipe).powerIn != 0 ? build.power.status : 1f;
+        return 1f;
+    }
+
+    void setConsumePower(Recipe recipe){
+        power.get().powerIn = tempRecipe.powerIn / recipe.craftTime;
+    }
+
+    void setRecipe(MultiCrafter.MultiCrafterBuild build, int i){
+        build.currentRecipe = i;
+        tempRecipe = getRecipe(build.currentRecipe);
+        setConsumePower(tempRecipe);
+    }
+
+    public Recipe getRecipe(int ind){
+        return recipes[ind];
+    }
+
     public void buildConfiguration(MultiCrafter.MultiCrafterBuild build, Table table){
         int ind = 0;
         for (Recipe recipe : recipes) {
@@ -270,8 +271,7 @@ public class ConsumeAll {
 
             int i = ind;
             btn.clicked(() -> {
-                build.currentRecipe = i;
-                setConsumePower(build);
+                setRecipe(build, i);
                 build.deselect();
             });
 
@@ -282,6 +282,10 @@ public class ConsumeAll {
             table.add(btn);
             table.row();
         }
+    }
+
+    public void updateBuilding(MultiCrafter.MultiCrafterBuild building){
+
     }
 
     public static class Recipe{
