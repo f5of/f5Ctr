@@ -9,6 +9,10 @@ import mindustry.world.*;
 
 public interface Temperaturec extends Buildingc{
      static boolean tryAddTemperatureBar(Block block){
+         if (block.buildType==null){
+             Reflect.invoke(block,"initBuilding");
+//             block.initBuilding();
+         }
         Building building = block.buildType.get();
         if(!(building instanceof Temperaturec)) return false;
 //        if(!(building instanceof Temperaturec)) throw new IllegalArgumentException("Building of \"" + block.name + "\" should be instanceof Temperaturec");
