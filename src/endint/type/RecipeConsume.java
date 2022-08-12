@@ -6,6 +6,7 @@ import arc.scene.ui.layout.*;
 import arc.util.*;
 import endint.gen.*;
 import endint.world.blocks.crafting.*;
+import endint.world.blocks.crafting.MultiCrafter.*;
 import endint.world.meta.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
@@ -202,25 +203,38 @@ public class RecipeConsume{
     public BlockStatus status(MultiCrafter.MultiCrafterBuild build){
         tempRecipe = recipes[build.currentRecipe];
 
-        for(ItemStack itemStack : tempRecipe.itemsIn)
-            if(!build.items.has(itemStack.item, itemStack.amount))
+        //region input
+        for(ItemStack itemStack : tempRecipe.itemsIn){
+            if(!build.items.has(itemStack.item, itemStack.amount)){
                 return BlockStatus.noInput;
-        for(LiquidStack liquidStack : tempRecipe.liquidsIn)
-            if(build.liquids.get(liquidStack.liquid) < liquidStack.amount)
+            }
+        }
+        for(LiquidStack liquidStack : tempRecipe.liquidsIn){
+            if(build.liquids.get(liquidStack.liquid) < liquidStack.amount){
                 return BlockStatus.noInput;
-        for(ItemStack itemStack : tempRecipe.itemsOut)
-            if(build.block.itemCapacity - build.items.get(itemStack.item) < 0)
+            }
+        }
+        if(tempRecipe.powerIn != 0 && (build.power == null || build.power.status == 0)){
+            return BlockStatus.noInput;
+        }
+        //endregion
+        //region output
+        for(ItemStack itemStack : tempRecipe.itemsOut){
+            if(build.block.itemCapacity - build.items.get(itemStack.item) < 0){
                 return BlockStatus.noOutput;
-        for(LiquidStack liquidStack : tempRecipe.liquidsOut)
-            if(build.block.liquidCapacity - build.liquids.get(liquidStack.liquid) < 0)
+            }
+        }
+        for(LiquidStack liquidStack : tempRecipe.liquidsOut){
+            if(build.block.liquidCapacity - build.liquids.get(liquidStack.liquid) < 0){
                 return BlockStatus.noOutput;
-        if(build.power != null) if(build.power.status == 0 && tempRecipe.powerIn != 0) return BlockStatus.noInput;
-        if(build.power == null && tempRecipe.powerIn != 0) return BlockStatus.noInput;
+            }
+        }
+        //endregion
 
         return BlockStatus.active;
     }
 
-    public void handleCraft(MultiCrafter.MultiCrafterBuild build){
+    public void craft(MultiCrafter.MultiCrafterBuild build){
         tempRecipe = recipes[build.currentRecipe];
 
         for(ItemStack itemStack : tempRecipe.itemsIn) build.items.remove(itemStack.item, itemStack.amount);
@@ -228,24 +242,15 @@ public class RecipeConsume{
         for(ItemStack itemStack : tempRecipe.itemsOut) build.items.add(itemStack.item, itemStack.amount);
         for(LiquidStack liquidStack : tempRecipe.liquidsOut) build.liquids.add(liquidStack.liquid, liquidStack.amount);
 
-        if(build instanceof Temperaturec) ((Temperaturec)build).addTemperature(tempRecipe.temperatureOut);
+        if(build instanceof Temperaturec) build.<Temperaturec>as().addTemperature(tempRecipe.temperatureOut);
     }
 
     public float getEfficiency(MultiCrafter.MultiCrafterBuild build){
         if(status(build) != BlockStatus.active) return 0f;
+        //TODO replace "build.power.status" by "build.power.status/powerIn"
         if(build.power != null) return recipes[build.currentRecipe].powerIn != 0 ? build.power.status : 1f;
         return 1f;
     }
-
-    void setConsumePower(Recipe recipe){
-        power.powerIn = recipe.powerIn / recipe.craftTime;
-    }
-
-    void setRecipe(MultiCrafter.MultiCrafterBuild build, int i){
-        build.currentRecipe = i;
-        setConsumePower(recipes[build.currentRecipe]);
-    }
-
 
     public void buildConfiguration(MultiCrafter.MultiCrafterBuild build, Table table){
         int ind = 0;
@@ -254,7 +259,7 @@ public class RecipeConsume{
 
             int i = ind;
             btn.clicked(() -> {
-                setRecipe(build, i);
+                build.currentRecipe = i;
                 build.deselect();
             });
 
@@ -267,9 +272,6 @@ public class RecipeConsume{
         }
     }
 
-    public void updateBuilding(MultiCrafter.MultiCrafterBuild building){
-
-    }
 
     public static class Recipe{
         public LiquidStack[] liquidsIn = {}, liquidsOut = {};
@@ -279,8 +281,7 @@ public class RecipeConsume{
         public float temperatureOut = 0f;
     }
 
-    static class RecipeConsumePower extends ConsumePower{
-        public float powerIn = 0;
+    class RecipeConsumePower extends ConsumePower{
 
         public RecipeConsumePower(){
 
@@ -288,12 +289,14 @@ public class RecipeConsume{
 
         @Override
         public float requestedPower(Building entity){
-            return powerIn;
+            Recipe recipe = recipes[entity.<MultiCrafterBuild>as().currentRecipe];
+            return recipe.powerIn / recipe.craftTime;
         }
 
         boolean canWork(Building build){
-            return build instanceof MultiCrafter.MultiCrafterBuild &&
-            build.block instanceof MultiCrafter && ((MultiCrafter)build.block).consume.status((MultiCrafter.MultiCrafterBuild)build)
+            return
+            build instanceof MultiCrafter.MultiCrafterBuild
+            && ((MultiCrafter)build.block).consume.status((MultiCrafter.MultiCrafterBuild)build)
             == BlockStatus.active;
         }
 
@@ -308,6 +311,10 @@ public class RecipeConsume{
 
         @Override
         public void display(Stats stats){
+        }
+
+        @Override
+        public void build(Building build, Table table){
         }
 
         @Override

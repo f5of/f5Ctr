@@ -7,7 +7,7 @@ buildscript{
         // v7
         mindustryPath = "com.github.Anuken.Mindustry"
         //the build number that this mod is made for
-        mindustryVersion = "v136.1"
+        mindustryVersion = "v137"
         arcVersion = mindustryVersion
 
         //v6
@@ -15,7 +15,7 @@ buildscript{
         //the build number that this mod is made for
         //mindustryVersion = 'v135'
         //arcVersion=mindustryVersion
-        modCoreVersion = "60285a04edb"
+        modCoreVersion = "218c2a4a50e"
 
         kotlinVersion = "1.6.0"
         jabelVersion = "0.7.0"

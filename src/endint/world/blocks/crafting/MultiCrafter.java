@@ -69,7 +69,7 @@ public class MultiCrafter extends Block {
             }
 
             if(progress >= 1f) {
-                consume.handleCraft(this);
+                consume.craft(this);
                 progress %= 1f;
             }
 
