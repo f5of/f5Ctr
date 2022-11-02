@@ -5,9 +5,9 @@ import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
 import endint.gen.*;
+import endint.meta.EIStatUnit;
 import endint.world.blocks.crafting.*;
 import endint.world.blocks.crafting.MultiCrafter.*;
-import endint.world.meta.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -16,7 +16,7 @@ import mindustry.world.*;
 import mindustry.world.consumers.*;
 import mindustry.world.meta.*;
 
-import static endint.world.meta.EIStat.recipeStat;
+import static endint.meta.EIStat.recipeStat;
 
 public class RecipeConsume{
 
@@ -93,33 +93,33 @@ public class RecipeConsume{
 
     void addItemBar(Block block, Item item){
         block.addBar("item-" + item, entity -> new Bar(
-        () -> Core.bundle.get("item." + item.name + ".name"),
-        () -> Pal.items,
-        () -> (float)entity.items.get(item) / block.itemCapacity)
+                () -> Core.bundle.get("item." + item.name + ".name"),
+                () -> Pal.items,
+                () -> (float)entity.items.get(item) / block.itemCapacity)
         );
     }
 
     void addLiquidBar(Block block, Liquid liquid){
         block.addBar("item-" + liquid, entity -> new Bar(
-        () -> Core.bundle.get("liquid." + liquid.name + ".name"),
-        liquid::barColor,
-        () -> entity.liquids.get(liquid) / block.liquidCapacity)
+                () -> Core.bundle.get("liquid." + liquid.name + ".name"),
+                liquid::barColor,
+                () -> entity.liquids.get(liquid) / block.liquidCapacity)
         );
     }
 
     void addConsPowerBar(Block block){
         block.addBar("powerin", entity -> new Bar(
-        () -> Core.bundle.get("powerin"),
-        () -> Pal.powerBar,
-        entity::efficiency)
+                () -> Core.bundle.get("powerin"),
+                () -> Pal.powerBar,
+                entity::efficiency)
         );
     }
 
     void addOutPowerBar(Block block){
         block.addBar("powerout", entity -> new Bar(
-        () -> Core.bundle.get("powerout"),
-        () -> Pal.powerBar,
-        () -> entity.power != null ? entity.efficiency() : 0f)
+                () -> Core.bundle.get("powerout"),
+                () -> Pal.powerBar,
+                () -> entity.power != null ? entity.efficiency() : 0f)
         );
     }
 
@@ -129,20 +129,20 @@ public class RecipeConsume{
             a.table(c -> {
                 for(ItemStack itemStack : tempRecipe.itemsIn){
                     c.add(new ReqImage(new ItemImage(itemStack.item.uiIcon, itemStack.amount),
-                    () -> build.items.has(itemStack.item, itemStack.amount))).padRight(8);
+                            () -> build.items.has(itemStack.item, itemStack.amount))).padRight(8);
                 }
                 for(LiquidStack liquidStack : tempRecipe.liquidsIn){
                     c.add(new ReqImage(new ItemImage(liquidStack.liquid.uiIcon, (int)liquidStack.amount),
-                    () -> build.liquids.get(liquidStack.liquid) >= liquidStack.amount)).padRight(8);
+                            () -> build.liquids.get(liquidStack.liquid) >= liquidStack.amount)).padRight(8);
                 }
 
                 if(tempRecipe.powerIn != 0) c.add(Strings.fixed(tempRecipe.powerIn / tempRecipe.craftTime, 2)
-                + " " + StatUnit.powerSecond.localized()).padRight(8);
+                        + " " + StatUnit.powerSecond.localized()).padRight(8);
 
                 c.add(new Image(EITex.arrow)).padRight(8);
                 c.add(new Image(EITex.arrow)).padRight(8);
                 c.add(Strings.fixed(tempRecipe.craftTime / 60f, 2)
-                + " " + StatUnit.seconds.localized()).padRight(8);
+                        + " " + StatUnit.seconds.localized()).padRight(8);
                 c.add(tempRecipe.temperatureOut + " " + EIStatUnit.temperature.localized()).padRight(8);
 
                 for(ItemStack itemStack : tempRecipe.itemsOut){
@@ -153,7 +153,7 @@ public class RecipeConsume{
                 }
 
                 if(tempRecipe.powerOut != 0) c.add(Strings.fixed(tempRecipe.powerOut / tempRecipe.craftTime, 2)
-                + " " + StatUnit.powerSecond.localized()).padRight(8);
+                        + " " + StatUnit.powerSecond.localized()).padRight(8);
 
             });
         }).growX().left();
@@ -168,7 +168,7 @@ public class RecipeConsume{
         }
 
         if(recipe.powerIn != 0) table.add(Strings.fixed(recipe.powerIn / recipe.craftTime, 2)
-        + " " + StatUnit.powerSecond.localized()).padRight(8);
+                + " " + StatUnit.powerSecond.localized()).padRight(8);
 
         table.add(new Image(EITex.arrow)).padRight(8);
         table.add(Strings.fixed(recipe.craftTime / 60f, 2) + " " + StatUnit.seconds.localized()).padRight(8);
@@ -182,7 +182,7 @@ public class RecipeConsume{
         }
 
         if(recipe.powerOut != 0) table.add(Strings.fixed(recipe.powerOut / recipe.craftTime, 2)
-        + " " + StatUnit.powerSecond.localized()).padRight(8);
+                + " " + StatUnit.powerSecond.localized()).padRight(8);
     }
 
     public void setStats(Stats stats){
@@ -241,8 +241,6 @@ public class RecipeConsume{
         for(LiquidStack liquidStack : tempRecipe.liquidsIn) build.liquids.remove(liquidStack.liquid, liquidStack.amount);
         for(ItemStack itemStack : tempRecipe.itemsOut) build.items.add(itemStack.item, itemStack.amount);
         for(LiquidStack liquidStack : tempRecipe.liquidsOut) build.liquids.add(liquidStack.liquid, liquidStack.amount);
-
-        if(build instanceof Temperaturec) build.<Temperaturec>as().addTemperature(tempRecipe.temperatureOut);
     }
 
     public float getEfficiency(MultiCrafter.MultiCrafterBuild build){
@@ -295,9 +293,9 @@ public class RecipeConsume{
 
         boolean canWork(Building build){
             return
-            build instanceof MultiCrafter.MultiCrafterBuild
-            && ((MultiCrafter)build.block).consume.status((MultiCrafter.MultiCrafterBuild)build)
-            == BlockStatus.active;
+                    build instanceof MultiCrafter.MultiCrafterBuild
+                            && ((MultiCrafter)build.block).consume.status((MultiCrafter.MultiCrafterBuild)build)
+                            == BlockStatus.active;
         }
 
         @Override

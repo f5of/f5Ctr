@@ -1,5 +1,6 @@
 package endint.world.blocks.crafting;
 
+import arc.func.Func;
 import arc.graphics.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
@@ -72,7 +73,6 @@ public class MultiCrafter extends Block {
                 consume.craft(this);
                 progress %= 1f;
             }
-
 
             for (ItemStack itemStack : consume.recipes[currentRecipe].itemsOut) {
                 dump(itemStack.item);

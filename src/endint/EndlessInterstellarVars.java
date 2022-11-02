@@ -4,17 +4,18 @@ import arc.*;
 import arc.struct.*;
 import arc.util.*;
 import endint.content.*;
+import endint.io.FractionsResearchChunk;
+import endint.ui.EIUI;
 import mindustry.*;
 import mindustry.game.*;
 import mma.*;
 
 public class EndlessInterstellarVars extends ModVars{
-
     private final static Seq<Runnable> onLoad = new Seq<>();
 //    public static ModSettings settings;
 //    public static ModNetClient netClient;
 //    public static ModNetServer netServer;
-//    public static ModUI modUI;
+    public static EIUI ui = new EIUI();
 //    public static ModLogic logic;
 
     static{
@@ -58,23 +59,28 @@ public class EndlessInterstellarVars extends ModVars{
     @Override
     /**This is where you initialize your content lists. But do not forget about correct order.
      * @note correct order:
-     *  ModItems.load()
+     *  EIItems.load()
      *  ModStatusEffects.load()
-     *  ModLiquids.load()
+     *  EILiquids.load()
      *  ModBullets.load()
      *  ModUnitTypes.load()
-     *  ModBlocks.load()
-     *  ModPlanets.load()
+     *  EIBlocks.load()
+     *  EIPlanets.load()
      *  ModSectorPresets.load()
      *  ModTechTree.load()
      * */
     public void loadContent(){
-        ModItems.load();
-        ModLiquids.load();
-        ModRecipes.load();
-        ModBlocks.load();
-        ModPlanets.load();
+        EIFractions.load();
+        EIItems.load();
+        EILiquids.load();
+        EIUnitTypes.load();
+        EIRecipes.load();
+        EIBlocks.load();
+        FallenTechTree.load();
+        ResearchController.init();
+        new FractionsResearchChunk();
     }
+
     @Override
     protected void showException(Throwable exception){
         Log.err(exception);

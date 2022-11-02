@@ -1,23 +1,20 @@
 package endint;
 
-import endint.annotations.*;
-import endint.gen.*;
-import endint.type.*;
-import mindustry.*;
-import mindustry.ctype.*;
-import mindustry.world.*;
-import mindustry.world.blocks.power.PowerGraph;
-import mma.*;
-import mma.annotations.ModAnnotations.*;
-
-import java.lang.reflect.Field;
+import endint.gen.EIMusics;
+import endint.gen.EISounds;
+import endint.gen.EITex;
+import mindustry.Vars;
+import mindustry.ctype.Content;
+import mindustry.world.Block;
+import mma.MMAMod;
+import mma.ModVars;
+import mma.annotations.ModAnnotations.MainClass;
 
 import static endint.EndlessInterstellarVars.*;
 
 
 @MainClass()
 public class EndlessInterstellar extends MMAMod {
-
     public EndlessInterstellar() {
         super();
         EndlessInterstellarVars.load();
@@ -31,17 +28,13 @@ public class EndlessInterstellar extends MMAMod {
     @Override
     protected void created(Content content){
         super.created(content);
-        if (content instanceof Block block){
-            Temperaturec.tryAddTemperatureBar(block);
-        }
     }
 
     public void init() {
+        ui.init();
         if (!loaded)
             return;
         EITex.load();
-
-
         super.init();
         if (neededInit)
             listener.init();
@@ -57,6 +50,5 @@ public class EndlessInterstellar extends MMAMod {
             ModVars.inTry(EISounds::load);
         }
         super.loadContent();
-
     }
 }
