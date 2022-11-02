@@ -31,6 +31,7 @@ public class ResearchController {
             e.printStackTrace();
         }
 
+        researching = new ObjectMap<Fraction, FractionResearchNode>();
         loadChildren(FallenTechTree.root, EIFractions.fallen);
     }
 

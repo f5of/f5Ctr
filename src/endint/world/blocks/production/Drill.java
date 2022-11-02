@@ -10,6 +10,7 @@ public class Drill extends mindustry.world.blocks.production.Drill implements Fr
     public Drill(String name, Fraction f) {
         super(name);
         fraction = f;
+        drawMineItem = false;
     }
 
     @Override

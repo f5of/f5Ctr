@@ -3,6 +3,7 @@ package endint.ui;
 import arc.graphics.Color;
 import arc.scene.ui.Image;
 import arc.scene.ui.Label;
+import arc.util.Log;
 import endint.ResearchController;
 import endint.content.EIFractions;
 import endint.game.Fraction;
@@ -12,7 +13,6 @@ import mindustry.content.TechTree;
 import mindustry.core.UI;
 import mindustry.gen.Tex;
 import mindustry.type.ItemStack;
-import mindustry.ui.Styles;
 
 public class ResearchHudFrag {
     public static void build(){
